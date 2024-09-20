@@ -7,17 +7,13 @@
 
 
 resource "aws_instance" "expense"{
-   count=length(var.instance_names)
-    ami=data.aws_ami.joindevops.id
-    instance_type= var.instance_type
+count=length(var.instance_names)
+    ami= data.aws_ami.joindevops.id
+    instance_type= local.instance_type
     vpc_security_group_ids=[aws_security_group.ssh.id]
-     tags = merge(
-        var.common_tags,
-        {
-            Name= var.instance_names[count.index]
-            Component= var.instance_names[count.index]
-        }
-     )
+      tags ={
+        Name=var.instance_names[count.index]
+     }
 }
 
 resource "aws_security_group" "ssh"{
@@ -41,12 +37,6 @@ resource "aws_security_group" "ssh"{
         ipv6_cidr_blocks=["::/0"]
     }
 
-    tags = merge(
-        var.common_tags,
-        {
-            Name= "allow"
-            
-        }
-     )
+    tags= var.tags
 
 }

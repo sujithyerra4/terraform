@@ -1,31 +1,21 @@
-# variable "ami_id" {
-#     type = string 
-#     default = "ami-09c813fb71547fc4f"
-# }
-variable "zone" {
+variable "ami_id" {
     type = string 
-    default = "sujithyerra.online"
+    default = "ami-09c813fb71547fc4f"
 }
-variable "zone_id" {
-    type = string 
-    default = "Z026225128T7Q91W4Z6JF"
-}
+
 variable "instance_type" {
     type = string
    // default= "t2.large"
 }
-variable "instance_names" {
-type=list(string)
-    default= ["mysql","backend","frontend"]
+
+variable "Environment"{
+ default="prod"
 }
 
-variable "common_tags"{
-    type=map
-    default={
-        Project= "Expense"
-        Environment="dev"
-        terraform="true"
-    }
+locals{
+    domain_name ="sujithyerra.online"
+    zone_id=""
+    instance_type= var.Environment == "prod"? "t2.small":"t2.micro"
 }
 
 variable "tags"{
